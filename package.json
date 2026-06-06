@@ -9,9 +9,10 @@
   "type": "commonjs",
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@vercel/ncc": "^0.38.4"
+    "@vercel/ncc": "^0.38.4",
+    "openai": "^6.42.0"
   },
   "devDependencies": {
-    "@github/local-action": "^6.0.2"
+    "@github/local-action": "^5.2.0"
   }
 }
