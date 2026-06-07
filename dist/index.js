@@ -42715,7 +42715,6 @@ const OpenAI = __nccwpck_require__(2583);
 const { zodResponseFormat } = __nccwpck_require__(2156);
 const { z } = __nccwpck_require__(924);
 
-// Define the structured output format using Zod schema
 const JokeRatingSchema = z.object({
   is_joke: z.boolean().describe("Whether the input is actually a joke or attempt at humor"),
   score: z.number().min(1).max(10).nullable().describe("Rating from 1-10, where 10 is the funniest."),
@@ -42725,11 +42724,8 @@ const JokeRatingSchema = z.object({
 
 async function rateJoke(joke, token) {
   const endpoint = "https://models.github.ai/inference";
-
-  // Initialize OpenAI client with GitHub Models endpoint
   const client = new OpenAI({ baseURL: endpoint, apiKey: token });
 
-  // Create chat completion with Zod response format
   const completion = await client.chat.completions.parse({
     messages: [
       {
@@ -42743,12 +42739,9 @@ async function rateJoke(joke, token) {
       },
     ],
     model: "openai/gpt-4.1-mini",
-
-    // Use Zod schema for structured response
     response_format: zodResponseFormat(JokeRatingSchema, "joke_rating"),
   });
 
-  // Return the parsed response (automatically validated by Zod)
   return completion.choices[0]?.message?.parsed;
 }
 
